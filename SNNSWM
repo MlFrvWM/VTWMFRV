@@ -1,18 +1,14 @@
-local libraryUrl = "https://raw.githubusercontent.com/memejames/elerium-v2-ui-library/main/Library"
-local scriptContent = game:HttpGet(libraryUrl, true)
+local libraryContent = game:HttpGet("https://raw.githubusercontent.com/memejames/elerium-v2-ui-library/main/Library", true)
+local success, loadedLibrary = pcall(loadstring, libraryContent)
 
-if scriptContent and #scriptContent > 0 then
-    local loadedChunk = loadstring(scriptContent)
-
-    if type(loadedChunk) == "function" then
-        local library = loadedChunk()
-
-        if library then
-            local window = library:AddWindow("VTBR CLAN", {
-                main_color = Color3.fromRGB(1, 3, 5),
-                min_size = Vector2.new(730, 600),
-                can_resize = false,
-            })
+if success and type(loadedLibrary) == "function" then
+    local library = loadedLibrary()
+    -- Resto do seu script
+else
+    warn("Erro ao carregar a biblioteca ou o loadstring retornou algo inesperado:", loadedLibrary)
+    Player:Kick("O script não pôde carregar a biblioteca necessária. Tente novamente mais tarde.")
+    return
+end
 
             local Main = window:AddTab("Main")
 
