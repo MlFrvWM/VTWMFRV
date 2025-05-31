@@ -1,17 +1,13 @@
-local scriptContent = game:HttpGet("https://raw.githubusercontent.com/memejames/elerium-v2-ui-library/main/Library", true)
-
+local libraryUrl = "https://raw.githubusercontent.com/memejames/elerium-v2-ui-library/main/Library"
+local scriptContent = game:HttpGet(libraryUrl, true)
 
 if scriptContent and #scriptContent > 0 then
-    
     local loadedChunk = loadstring(scriptContent)
 
-    
     if type(loadedChunk) == "function" then
-        
-        local library = loadedChunk() 
+        local library = loadedChunk()
 
-        if library then 
-
+        if library then
             local window = library:AddWindow("VTBR CLAN", {
                 main_color = Color3.fromRGB(1, 3, 5),
                 min_size = Vector2.new(730, 600),
@@ -21,12 +17,12 @@ if scriptContent and #scriptContent > 0 then
             local Main = window:AddTab("Main")
 
             Main:AddLabel("Discord Server:")
-
             Main:AddButton("Copy Link", function()
                 setclipboard("https://discord.gg/pDmw8Wz7Nx")
             end)
 
             Main:AddLabel("Local Player")
+
             local walkSpeedValue = 16
             Main:AddTextBox("WalkSpeed", function(text)
                 local speed = tonumber(text)
@@ -38,75 +34,48 @@ if scriptContent and #scriptContent > 0 then
             local setSpeed = false
             Main:AddSwitch("Set Speed", function(state)
                 setSpeed = state
-                 
 
                 if setSpeed then
-                    task.spawn(function() 
-
+                    task.spawn(function()
                         while setSpeed do
                             local player = game.Players.LocalPlayer
-                            if player and player.Character and player.Character:FindFirstChildOfClass("Humanoid") then
+                            if player and player.Character and player.Character.Humanoid then
                                 player.Character.Humanoid.WalkSpeed = walkSpeedValue
                             end
                             task.wait(0.1)
                         end
-                        -- Resetar a velocidade quando o switch é desligado
-                        local player = game.Players.LocalPlayer
-                        if player and player.Character and player.Character:FindFirstChildOfClass("Humanoid") then
-                            player.Character.Humanoid.WalkSpeed = 16
-                        end
                     end)
-                else 
-                    local player = game.Players.LocalPlayer
-                    if player and player.Character and player.Character:FindFirstChildOfClass("Humanoid") then
-                        player.Character.Humanoid.WalkSpeed = 16
-                    end
                 end
             end)
 
             local Teleport = window:AddTab("Teleport")
 
-            Teleport:AddButton("Darkrai", function()
-                local player = game.Players.LocalPlayer
-                if player and player.Character and player.Character:FindFirstChild("HumanoidRootPart") then
-                    player.Character.HumanoidRootPart.CFrame = CFrame.new(-2933.47998, 29.6399612, -579.946045)
-                end
+            Teleport:AddButton("Home", function()
+                game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-2933.47998, 29.6399612, -579.946045)
             end)
 
             Teleport:AddButton("Mythical Gym", function()
-                local player = game.Players.LocalPlayer
-                if player and player.Character and player.Character:FindFirstChild("HumanoidRootPart") then
-                    player.Character.HumanoidRootPart.CFrame = CFrame.new(2659.50635, 21.6095238, 934.690613)
-                end
+                game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(2659.50635, 21.6095238, 934.690613)
             end)
 
             Teleport:AddButton("Eternal Gym", function()
-                local player = game.Players.LocalPlayer
-                if player and player.Character and player.Character:FindFirstChild("HumanoidRootPart") then
-                    player.Character.HumanoidRootPart.CFrame = CFrame.new(-7176.19141, 45.394104, -1106.31421)
-                end
+                game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-7176.19141, 45.394104, -1106.31421)
             end)
 
             Teleport:AddButton("Legend Gym", function()
-                local player = game.Players.LocalPlayer
-                if player and player.Character and player.Character:FindFirstChild("HumanoidRootPart") then
-                    player.Character.HumanoidRootPart.CFrame = CFrame.new(4446.91699, 1004.46698, -3983.76074)
-                end
+                game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(4446.91699, 1004.46698, -3983.76074)
             end)
 
             Teleport:AddButton("Jungle Gym", function()
-                local player = game.Players.LocalPlayer
-                if player and player.Character and player.Character:FindFirstChild("HumanoidRootPart") then
-                    player.Character.HumanoidRootPart.CFrame = CFrame.new(-8137, 28, 2820)
-                end
+                game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-8137, 28, 2820)
             end)
 
             local Misc = window:AddTab("Misc")
+
             Misc:AddButton("Rejoin Server", function()
                 local ts = game:GetService("TeleportService")
                 ts:Teleport(game.PlaceId)
             end)
-
         end
     end
 end
